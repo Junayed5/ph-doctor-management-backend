@@ -5,6 +5,8 @@ import { UserValidation } from "./user.validation";
 
 const router = Router();
 
+router.get("/", UserController.getAllFromDB);
+
 router.post(
   "/create-patient",
   fileUploader.upload.single("file"),
@@ -13,6 +15,16 @@ router.post(
       JSON.parse(req.body.data)
     );
     return UserController.createPatient(req, res, next);
+  }
+);
+router.post(
+  "/create-admin",
+  fileUploader.upload.single("file"),
+  (req: Request, res: Response, next: NextFunction) => {
+    req.body = UserValidation.createAdminValidationSchema.parse(
+      JSON.parse(req.body.data)
+    );
+    return UserController.createAdmin(req, res, next);
   }
 );
 
