@@ -11,7 +11,7 @@ const getAllFromDB = catchAsync(async(req: Request, res: Response) => {
 
     const {page, limit, searchTerm, sortBy, sortOrder, role, status} = req.query;
 
-    const result = await UserService.getAllFromDB({page: Number(page), limit: Number(limit), searchTerm, sortBy, sortOrder, role, status});
+    const result = await UserService.getAllFromDB(options, filter);
 
     sendResponse(res,{
         statusCode: 200,
