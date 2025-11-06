@@ -6,7 +6,7 @@ import { pick } from "../../helper/pick";
 
 const getAllFromDB = catchAsync(async(req: Request, res: Response) => {
 
-    const options = pick(req.query, ["page", "limit", "sortBy", "sortOrder"]);
+    const options = pick(req.query, ["skip","page", "limit", "sortBy", "sortOrder"]);
     const filter = pick(req.query, ["searchTerm", "role", "status"])
 
     const {page, limit, searchTerm, sortBy, sortOrder, role, status} = req.query;

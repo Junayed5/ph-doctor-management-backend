@@ -1,5 +1,6 @@
 export type IOptions = {
-  page?: string | number;
+  skip?: number | undefined;
+  page?: number | undefined;
   limit?: string | number;
   sortBy?: string;
   sortOrder?: string;
