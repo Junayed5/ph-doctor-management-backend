@@ -28,7 +28,7 @@ const createAdminValidationSchema = z.object({
 });
 const createDoctorValidationSchema = z.object({
   password: z.string(),
-  admin: z.object({
+  doctor: z.object({
     name: z.string({
       error: "Name is required",
     }),

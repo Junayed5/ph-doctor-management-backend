@@ -2,6 +2,7 @@ import { addHours, addMinutes, format } from "date-fns";
 import { prisma } from "../../shared/prisma";
 import { Prisma } from "@prisma/client";
 import { IOptions, paginationHelpers } from "../../helper/paginationHelpers";
+import { IJWTPayload } from "../../../types/commonTypes";
 
 const insertSchedule = async (payload: any) => {
   const { startTime, endTime, startDate, endDate } = payload;
@@ -61,8 +62,13 @@ const insertSchedule = async (payload: any) => {
   return schedule;
 };
 
-const scheduleForDoctor = async (options: any, filters: any) => {
-  const { skip, page, limit, sortBy, sortOrder } = paginationHelpers.calculatePagination(options);
+const scheduleForDoctor = async (
+  user: IJWTPayload,
+  options: any,
+  filters: any
+) => {
+  const { skip, page, limit, sortBy, sortOrder } =
+    paginationHelpers.calculatePagination(options);
   const { startDate: filterStartDateTime, endDate: filterEndDateTime } =
     filters;
 
@@ -92,10 +98,30 @@ const scheduleForDoctor = async (options: any, filters: any) => {
         }
       : {};
 
+  const doctorSchedule = await prisma.doctorSchedule.findMany({
+    where: {
+      doctor: {
+        email: user.email,
+      },
+    },
+    select: {
+      scheduleId: true,
+    },
+  });
+
+  const doctorScheduleIds = doctorSchedule.map(
+    (schedule) => schedule.scheduleId
+  );
+
   const result = await prisma.schedule.findMany({
     skip,
     take: limit,
-    where: whereConditions,
+    where: {
+      ...whereConditions,
+      id: {
+        notIn: doctorScheduleIds,
+      },
+    },
 
     orderBy: {
       [sortBy]: sortOrder,
@@ -103,7 +129,12 @@ const scheduleForDoctor = async (options: any, filters: any) => {
   });
 
   const total = await prisma.schedule.count({
-    where: whereConditions,
+    where: {
+      ...whereConditions,
+      id: {
+        notIn: doctorScheduleIds,
+      },
+    },
   });
 
   return {
@@ -116,7 +147,16 @@ const scheduleForDoctor = async (options: any, filters: any) => {
   };
 };
 
+const deleteScheduleFromDB = async (id: string) => {
+  return await prisma.schedule.delete({
+    where: {
+      id,
+    },
+  });
+};
+
 export const ScheduleService = {
   insertSchedule,
   scheduleForDoctor,
+  deleteScheduleFromDB,
 };

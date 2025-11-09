@@ -36,19 +36,19 @@ model Doctor {
   email              String   @unique
   profilePhoto       String?
   contactNumber      String
-  address            String
-  registrationNumber String
+  address            String   @default("")
+  registrationNumber String   @default("")
   experience         Int      @default(0)
-  gender             Gender
-  appointmentFee     Int
-  qualification      String
-  currentWorkplace   String
-  designation        String
+  gender             Gender   @default(MALE)
+  appointmentFee     Int      @default(500)
+  qualification      String   @default("")
+  currentWorkplace   String   @default("")
+  designation        String   @default("")
   isDeleted          Boolean  @default(false)
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt
 
-  user User @relation(fields: [email], references: [email])
+  user            User             @relation(fields: [email], references: [email])
   doctorSchedules doctorSchedule[]
 
   @@map("doctors")
