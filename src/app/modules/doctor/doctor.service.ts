@@ -147,6 +147,13 @@ const findOneDoctorFromDB = async (id: string) => {
     where: {
       id,
     },
+    include:{
+      doctorSchedules: {
+        include: {
+          schedule: true
+        }
+      }
+    }
   });
 
   return uniqueDoctor;
