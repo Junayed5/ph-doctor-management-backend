@@ -33,10 +33,50 @@ const updateIntoDB = catchAsync(
       success: true,
       data: result
     });
+    
   }
 );
 
+const findOneDoctorFromDB = catchAsync(async(req: Request , res: Response) => {
+  const {id} = req.params;
+
+  const result = await DoctorService.findOneDoctorFromDB(id);
+
+  sendResponse(res, {
+      statusCode: 200,
+      message: "Doctor Retrieved Successfully",
+      success: true,
+      data: result
+    });
+})
+const deleteFromDB = catchAsync(async(req: Request , res: Response) => {
+  const {id} = req.params;
+
+  const result = await DoctorService.deleteFromDB(id);
+
+  sendResponse(res, {
+      statusCode: 200,
+      message: "Doctor Deleted Successfully",
+      success: true,
+      data: result
+    });
+})
+
+const getAISuggestion = catchAsync(async(req: Request , res: Response) => {
+  const result = await DoctorService.getAISuggestion(req.body);
+
+  sendResponse(res, {
+      statusCode: 200,
+      message: "AI Driven Suggestion Get Successfully",
+      success: true,
+      data: result
+    });
+})
+
 export const DoctorController = {
   getAllFromDB,
-  updateIntoDB
+  getAISuggestion,
+  updateIntoDB,
+  findOneDoctorFromDB,
+  deleteFromDB
 };

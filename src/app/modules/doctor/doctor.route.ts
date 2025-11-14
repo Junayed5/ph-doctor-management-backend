@@ -7,15 +7,23 @@ const router = Router();
 
 router.get(
   "/",
-//   auth(UserRole.DOCTOR),
-//   validateRequest(
-//     doctorScheduleValidation.createDoctorScheduleValidationSchema
-//   ),
   DoctorController.getAllFromDB
 );
+router.get(
+  "/:id",
+  DoctorController.findOneDoctorFromDB
+);
+router.post(
+  "/suggestion",
+  DoctorController.getAISuggestion
+)
 router.put(
   "/:id",
   DoctorController.updateIntoDB
+);
+router.delete(
+  "/:id",
+  DoctorController.deleteFromDB
 );
 
 export const DoctorRouter = router;
