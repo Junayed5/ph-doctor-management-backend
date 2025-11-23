@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "payments" ALTER COLUMN "amount" SET DEFAULT 100,
+ALTER COLUMN "status" SET DEFAULT 'UNPAID';
