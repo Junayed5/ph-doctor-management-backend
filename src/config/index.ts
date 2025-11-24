@@ -13,5 +13,6 @@ export default {
         api_key: process.env.API_KEY,
         api_secret: process.env.API_SECRET
     },
-    opeAiApiKey: process.env.OPENAI_API_KEY
+    opeAiApiKey: process.env.OPENAI_API_KEY,
+    stripeSecretKey: process.env.STRIPE_SECRET_KEY
 }
