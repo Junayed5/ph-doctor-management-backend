@@ -93,7 +93,7 @@ const createAppointment = async (user: IJWTPayload, payload: { doctorId: string,
         console.log(session)
 
 
-    return appointmentData
+    return {paymentUrl:session.url}
 })
 
 

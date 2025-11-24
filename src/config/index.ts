@@ -14,5 +14,6 @@ export default {
         api_secret: process.env.API_SECRET
     },
     opeAiApiKey: process.env.OPENAI_API_KEY,
-    stripeSecretKey: process.env.STRIPE_SECRET_KEY
+    stripeSecretKey: process.env.STRIPE_SECRET_KEY,
+    stripeWebHookSecret: process.env.STRIPE_WEBHOOK_SECRET
 }
